@@ -8,10 +8,10 @@
  */
 const sqlite3 = require('sqlite3').verbose();
 const bcrypt = require('bcrypt');
-const { location, admins } = require('../config.json').sqlite3;
+const { dbName, admins } = require('../config.json').sqlite3;
 
 function createConnection() {
-  const db = new sqlite3.Database(location, (err) => {
+  const db = new sqlite3.Database(`${dbName}.db`, (err) => {
     if (err) {
       console.error(err.message);
     }
