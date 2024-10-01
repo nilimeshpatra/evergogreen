@@ -1,0 +1,40 @@
+{
+  "name": "evergogreen",
+  "version": "1.0.0",
+  "description": "ExpressJS web app for tracking vegetation health across the world, using SQLite3, Express-Validator, and more.",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nilimeshpatra/evergogreen.git"
+  },
+  "keywords": [
+    "vegetation",
+    "tracking",
+    "health",
+    "nodejs",
+    "expressjs",
+    "sqlite3",
+    "express-validator",
+    "bcrypt",
+    "jsonwebtoken",
+    "dotenv"
+  ],
+  "author": "PantheraRed",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nilimeshpatra/evergogreen/issues"
+  },
+  "homepage": "https://github.com/nilimeshpatra/evergogreen#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "express-validator": "^7.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "sqlite3": "^5.1.7"
+  }
+}

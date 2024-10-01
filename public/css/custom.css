@@ -1,0 +1,88 @@
+/* Copyright (c) 2024 Nilimesh Patra */
+/* This project is licensed under MIT License */
+.custom-navbar {
+  box-shadow:
+    0 0.5rem 1rem rgb(0, 0, 0, 0.15),
+    inset 0 -1px 0 rgb(255, 255, 255, 0.15);
+}
+
+.navbar-toggler-icon {
+  width: 1.2em;
+  height: 1.2em;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='white' stroke-linecap='round' stroke-miterlimit='10' stroke-width='3' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.nav-link:focus,
+.nav-link:hover {
+  color: white;
+}
+
+.custom-dropdown-toggle::after {
+  vertical-align: 0.1em;
+}
+
+.dropdown-item-icon {
+  vertical-align: -0.125em;
+}
+
+.screen-fit-container {
+  height: calc(100vh - 3.84375rem);
+}
+
+.masthead {
+  padding: 3rem 0;
+  background: url('../images/masthead-background.webp') no-repeat center center / cover;
+}
+
+.masthead .logo {
+  height: calc(2.525rem + 3.3vw);
+}
+
+.masthead h1 {
+  font-size: calc(1.525rem + 3.3vw);
+  text-shadow: 0 0.25rem var(--bs-dark);
+}
+
+.masthead .lead {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+@media (min-width: 768px) {
+  .masthead .lead {
+    font-size: calc(1.275rem + 0.3vw);
+  }
+}
+
+@media (min-width: 1200px) {
+  .masthead .logo {
+    height: 100px;
+  }
+
+  .masthead h1 {
+    font-size: 4rem;
+  }
+}
+
+@media (min-width: 768px) and (min-width: 1200px) {
+  .masthead .lead {
+    font-size: 1.5rem;
+  }
+}
+
+.dashboard-link .dashboard-link-icon {
+  vertical-align: -0.2em;
+  transition: .2s ease-in-out transform;
+}
+
+.dashboard-link:hover .dashboard-link-icon {
+  transform: translateX(0.275em);
+}
+
+.form-color {
+  background-color: rgba(var(--bs-success-rgb), var(--bs-bg-opacity, 0.75)) !important;
+}
