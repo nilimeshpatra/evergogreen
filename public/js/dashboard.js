@@ -6,6 +6,31 @@
  * This Project is licensed under the MIT License.
  * See the LICENSE file for more information.
  */
+function deleteEntry(id) {
+  const token = getCookie("token");
+  
+  if (token == "") {
+    window.location.href = "login.html";
+    return;
+  }
+  
+  fetch(`/api/vhi/delete/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: token,
+    },
+  })
+  .then((res) => res.json())
+  .then((data) => {
+    if (data.success) {
+      document.getElementById(id).remove();
+    }
+    alert(data.message);
+  })
+  .catch((err) => console.error(err.message));
+}
+
 (async () => {
   "use strict";
 
@@ -165,15 +190,20 @@
     }
 
     let list = "";
+    let button = "";
     json.vhi_list.forEach((vhi) => {
-      const { id, location, vhi_value, date, vegetation_type } = vhi;
+      const { id, author, location, vhi_value, date, vegetation_type } = vhi;
+      if (author == data.user.id) {
+        button = `<td><button type="button" class="btn btn-sm btn-danger" onclick="deleteEntry(${id})">Delete</button><td>`;
+      }
       list += `
-        <tr>
+        <tr id=${id}>
           <td>${id}</td>
           <td>${location}</td>
           <td>${vhi_value}</td>
           <td>${date}</td>
           <td>${vegetation_type}</td>
+          ${button}
         </tr>
       `;
     });
