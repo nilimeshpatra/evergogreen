@@ -4,7 +4,7 @@ ExpressJS web app for tracking vegetation health across the world, using SQLite3
 ## prerequisites
 
 - GitHub CLI or GitBash (optional)
-- Node.js >= v16.14.2
+- Node.js v16.14.2
 - Postman (for test api)
 
 ## installation
@@ -20,6 +20,14 @@ After downloading/cloning the repository. Go into project directory by typing th
 ```
 cd evergogreen
 ```
+
+Before we install the dependencies, we must create an enviornment file. Make sure to replace `your-secret-key` with desired secret key:
+
+```
+echo "JWT_SECRET=your-secret-key" >> .env
+```
+
+You can also create the `.env` file manually, but don't forget to add `JWT_SECRET=your-secret-key` in the file.
 
 Now, type the following command to install the dependencies:
 
@@ -61,5 +69,4 @@ https://localhost:3000/api/vhi/*
 
 ## testing
 
-Additionally you can use Postman Desktop Client for testing API.
-
+For testing the API you can use the [Postman](https://postman.com) platform.
