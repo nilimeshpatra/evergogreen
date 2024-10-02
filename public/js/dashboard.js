@@ -155,8 +155,17 @@
 
     const vhiList = document.getElementById("vhi-list");
 
+    if (!json.vhi_list || json.vhi_list.length == 0) {
+      vhiList.innerHTML = `
+        <tr>
+          <td class="text-center" colspan="5">No Entry Found. Add an entry to see entry.<td>
+        </tr>
+      `;
+      return;
+    }
+
     let list = "";
-    json.forEach((vhi) => {
+    json.vhi_list.forEach((vhi) => {
       const { id, location, vhi_value, date, vegetation_type } = vhi;
       list += `
         <tr>

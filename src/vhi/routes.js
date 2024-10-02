@@ -19,25 +19,20 @@ const secret = process.env.JWT_SECRET;
 
 router.get('/', async (req, res) => {
   try {
-    const data = await new Promise((resolve, reject) => {
+    const vhi_list = await new Promise((resolve, reject) => {
       db.all('SELECT * FROM vhi', (err, rows) => {
         if (err) {
           reject(err);
         } else {
-          resolve(
-            rows.map((row) => {
-              const { id, location, vhi_value, date, vegetation_type } = row;
-              return { id, location, vhi_value, date, vegetation_type };
-            }),
-          );
+          resolve(rows);
         }
       });
     });
 
-    res.json(data);
+    res.json({ success: true, message: 'Retrieved VHI list', vhi_list });
   } catch (error) {
     console.error('Error fetching data:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ success: false, message: 'Unable to retrieve VHI list' });
   }
 });
 
@@ -80,7 +75,11 @@ router.post('/add', [header('Authorization').exists().withMessage('Missing authe
   });
 });
 
-router.post('/delete/:id', [header('Authorization').exists().withMessage('Missing authentication token')], (req, res) => {
+router.delete('/delete', (req, res) => {
+  res.status(400).json({ success: false, errors: [{ field: 'param', message: 'Missing id parameter' }] });
+});
+
+router.delete('/delete/:id', [header('Authorization').exists().withMessage('Missing authentication token')], (req, res) => {
   const errors = myValidationResult(req);
 
   if (!errors.isEmpty()) {

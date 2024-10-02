@@ -35,7 +35,7 @@ router.get('/', async (req, res) => {
     res.json(data);
   } catch (error) {
     console.error("Error fetching data:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ success: false, message: 'Unable to get users' });
   }
 });
 */
@@ -134,7 +134,21 @@ router.post(
           });
         });
       }),
-    body('password').exists().withMessage('Password is required').bail().isString().withMessage('Password must be string').bail().notEmpty().withMessage('Password must not be empty').bail().isLength({ min: 8, max: 32 }).withMessage('Password must be between 8 and 32 characters').bail().isStrongPassword().withMessage('Password must be strong (containing uppercase and lowercase letters, numbers, and special characters)'),
+    body('password')
+      .exists()
+      .withMessage('Password is required')
+      .bail()
+      .isString()
+      .withMessage('Password must be string')
+      .bail()
+      .notEmpty()
+      .withMessage('Password must not be empty')
+      .bail()
+      .isLength({ min: 8, max: 32 })
+      .withMessage('Password must be between 8 and 32 characters')
+      .bail()
+      .isStrongPassword()
+      .withMessage('Password must be strong (containing uppercase and lowercase letters, numbers, and special characters)'),
   ],
   (req, res) => {
     const errors = myValidationResult(req);
@@ -265,15 +279,23 @@ router.delete('/delete/:id', header('Authorization').exists().withMessage('Missi
           return res.status(403).json({ success: false, message: 'Forbidden' });
         }
         const id = req.params.id;
-        return db.run('DELETE FROM users WHERE id = ?', [id], (err) => {
+        return db.get('SELECT * FROM users WHERE id = ?', [id], (err, row) => {
           if (err) {
-            console.error(err.message);
-            return res.status(500).json({
-              success: false,
-              message: 'Unable to authenticate user',
+            return res.status(500).json({ success: false, message: 'Unable to find user' });
+          } else if (row) {
+            const id = row.id;
+            return db.run('DELETE FROM users WHERE id = ?', [id], (err) => {
+              if (err) {
+                console.error(err.message);
+                return res.status(500).json({
+                  success: false,
+                  message: 'Unable to authenticate user',
+                });
+              }
+              res.json({ success: true, message: `User deleted with ID: ${id}` });
             });
           }
-          res.json({ success: true, message: `User deleted with ID: ${id}` });
+          res.status(404).json({ success: false, message: 'User not found' });
         });
       }
       res.status(401).json({ success: false, message: 'Invalid authentication token' });
